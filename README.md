@@ -22,7 +22,7 @@ Technologies used are:
 
 `import /beanworks.sql into mysql and setup db settings`
 
-### Setup Configuration Files
+### Setup Configuration Files, Add new file in root `.env` and add below configurations
 
 `DATABASE_NAME=beanworks`
 
@@ -38,7 +38,8 @@ Technologies used are:
 
 `ENVIRONMENT="developement"`
 
-If you change in port Please change `constats.js`
+
+If you change in port Please change `constants.js`
 
 `export const API_URL = 'http://localhost:{PORT}';`
 
