@@ -18,6 +18,10 @@ Technologies used are:
 
 `cd beanworks-brijalsavaliya`
 
+### Setup Database
+
+`import /beanworks.sql into mysql and setup db settings`
+
 ### Setup Configuration Files
 
 `DATABASE_NAME=beanworks`
