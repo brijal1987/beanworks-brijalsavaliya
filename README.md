@@ -43,13 +43,13 @@ Generate Public/Private key, Add Public key in `keys/` and Do Necessary changes 
 
 `{`
 
-    `"appType" : "private",`
+    "appType" : "private",
 
-    `"consumerKey": "XXXXX",`
+    "consumerKey": "XXXXX",
 
-    `"consumerSecret": "xxx",`
+    "consumerSecret": "xxx",
 
-    `"privateKeyPath": "keys/privatekey.pem"`
+    "privateKeyPath": "keys/privatekey.pem"
 
 `}`
 
