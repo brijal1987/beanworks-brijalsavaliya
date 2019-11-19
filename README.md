@@ -10,14 +10,15 @@ Technologies used are:
 ### Database
 `MYSQL`
 
-Clone repo in your pc
+
+### Clone repo in your pc
 
 `git clone https://github.com/brijal1987/beanworks-brijalsavaliya.git`
 
 
 `cd beanworks-brijalsavaliya`
 
-Setup Configuration Files
+### Setup Configuration Files
 
 `DATABASE_NAME=beanworks`
 
