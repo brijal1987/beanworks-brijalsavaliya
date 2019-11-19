@@ -33,6 +33,6 @@ app.use('/graphql', express_graphql({
   rootValue: root,
   graphiql: true
 }));
-app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
+app.listen(4000, () => console.log('Express GraphQL Server Now Running On http://localhost:4000/graphql'));
 
-app.listen(port, () => console.log(`Node Server Listening on port ${port}`));
+app.listen(port, () => console.log(`Node Server Listening on port http://localhost:${port}`));
