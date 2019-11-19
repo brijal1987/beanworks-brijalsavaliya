@@ -43,7 +43,7 @@ class Vendors extends React.Component {
         this.setState({
           vendorData: vendors
         })
-      }, 2000);
+      }, 1000);
   }
 
   render() {

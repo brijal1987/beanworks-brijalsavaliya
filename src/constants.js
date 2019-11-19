@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:3001';
+export const API_URL = 'http://localhost:3000';
 export const DATE_FORMAT = 'YYYY/MM/DD';
 export const SYNC_STARTED = "SYNC STARTED";
 export const SYNC_RECEIVED = "SYNC RECEIVED";
