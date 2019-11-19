@@ -56,31 +56,31 @@ const insertSyncLogs = function(
       case SYNC_STARTED:
         message = `Starting ${syncDataType} on ${days[now.getDay()]},  ${
           months[now.getMonth()]
-        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()} : ${now.getMinutes()} : ${now.getMilliseconds()} ${period}`;
+        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()}:${now.getMinutes()}:${now.getMilliseconds()} ${period}`;
         break;
       case SYNC_RECEIVED:
         message = `Received ${records} files in ${syncDataType} on ${
           days[now.getDay()]
         },  ${
           months[now.getMonth()]
-        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()} : ${now.getMinutes()} : ${now.getMilliseconds()} ${period}`;
+        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()}:${now.getMinutes()}:${now.getMilliseconds()} ${period}`;
         break;
       case SYNC_FINISHED:
         message = `Finised ${records} files in ${syncDataType} on ${
           days[now.getDay()]
         },  ${
           months[now.getMonth()]
-        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()} : ${now.getMinutes()} : ${now.getMilliseconds()} ${period}`;
+        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()}:${now.getMinutes()}:${now.getMilliseconds()} ${period}`;
         break;
       case SYNC_FAILED:
         message = `Failed ${syncDataType} on ${days[now.getDay()]},  ${
           months[now.getMonth()]
-        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()} : ${now.getMinutes()} : ${now.getMilliseconds()} ${period}`;
+        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()}:${now.getMinutes()}:${now.getMilliseconds()} ${period}`;
         break;
       default:
         message = `Completed ${syncDataType} on ${days[now.getDay()]},  ${
           months[now.getMonth()]
-        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()} : ${now.getMinutes()} : ${now.getMilliseconds()} ${period}`;
+        } ${now.getDate()}, ${now.getFullYear()}, at ${now.getDate()}:${now.getMinutes()}:${now.getMilliseconds()} ${period}`;
     }
     var syncSql = `INSERT INTO
           SyncLogs (Parent, SyncDataType, SyncType, SyncBy, SyncOn, Status, Message)
@@ -92,26 +92,26 @@ const insertSyncLogs = function(
   });
 };
 
-const truncateAccount = function(){
+const truncateAccount = function() {
   var truncateSql = `TRUNCATE TABLE Accounts`;
-    database.query(truncateSql, function(err, result) {
-      if (err) throw err;
-    });
-}
+  database.query(truncateSql, function(err, result) {
+    if (err) throw err;
+  });
+};
 
-const truncateVendors = function(){
+const truncateVendors = function() {
   var truncateSql = `TRUNCATE TABLE Vendors`;
-    database.query(truncateSql, function(err, result) {
-      if (err) throw err;
-    });
-}
+  database.query(truncateSql, function(err, result) {
+    if (err) throw err;
+  });
+};
 
-const truncateSyncData = function(){
+const truncateSyncData = function() {
   var truncateSql = `TRUNCATE TABLE SyncLogs`;
-    database.query(truncateSql, function(err, result) {
-      if (err) throw err;
-    });
-}
+  database.query(truncateSql, function(err, result) {
+    if (err) throw err;
+  });
+};
 
 router.get("/", (req, res, next) => {
   res.json("Routes");
@@ -163,21 +163,14 @@ router.get("/syncData", async (req, res) => {
     database.query(sql, [insertData], function(err) {
       if (err) {
         database.rollback(function() {
-            insertSyncLogs(SYNC_FAILED, 0, parentID);
-            throw err;
+          insertSyncLogs(SYNC_FAILED, 0, parentID);
+          throw err;
         });
       }
       insertSyncLogs(SYNC_RECEIVED, accountData.length, parentID);
     });
   });
   insertSyncLogs(SYNC_FINISHED, accountData.length, parentID);
-
-  /*
-  status = "Completed",
-  records = 0,
-  parent = 0,
-  type = "Account",
-  syncDataType = "sync" */
 
   let vendorParentID = await insertSyncLogs("Completed", 0, 0, "Vendor");
   insertSyncLogs(SYNC_STARTED, 0, vendorParentID, "Vendor");
@@ -191,9 +184,10 @@ router.get("/syncData", async (req, res) => {
             UpdatedDateUTC
           }
         }`;
-  var vendorData = await request("http://localhost:4000/graphql", vendorQuery).then(
-    data => data.contacts
-  );
+  var vendorData = await request(
+    "http://localhost:4000/graphql",
+    vendorQuery
+  ).then(data => data.contacts);
   let insertVendorData = [];
   for (var i in vendorData) {
     let tempVendorInsertData = [];
@@ -217,16 +211,21 @@ router.get("/syncData", async (req, res) => {
     database.query(vendorSql, [insertVendorData], function(err) {
       if (err) {
         database.rollback(function() {
-            insertSyncLogs(SYNC_FAILED, 0, vendorParentID, "Vendor");
-            throw err;
+          insertSyncLogs(SYNC_FAILED, 0, vendorParentID, "Vendor");
+          throw err;
         });
       }
-      insertSyncLogs(SYNC_RECEIVED, vendorData.length, vendorParentID, "Vendor");
+      insertSyncLogs(
+        SYNC_RECEIVED,
+        vendorData.length,
+        vendorParentID,
+        "Vendor"
+      );
     });
   });
   insertSyncLogs(SYNC_FINISHED, vendorData.length, vendorParentID, "Vendor");
 
-  res.json({vendor: vendorData.length, account:accountData.length});
+  res.json({ vendor: vendorData.length, account: accountData.length });
 });
 
 router.get("/accounts", async (req, res) => {

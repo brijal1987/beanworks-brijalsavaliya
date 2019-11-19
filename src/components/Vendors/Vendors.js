@@ -4,6 +4,7 @@ import copy from '../../copy';
 import { DATE_FORMAT } from '../../constants';
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
+import Loader from '../Loader/Loader';
 
 const propTypes = {
   copy: PropTypes.shape({}),
@@ -20,7 +21,7 @@ class Vendors extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoadingAccounts: true,
+      isLoadingVendors: true,
       vendorData: []
     };
   }
@@ -36,14 +37,11 @@ class Vendors extends React.Component {
       })
       .catch(err => console.log(err));
       setTimeout(() => {
-        console.log('Our Vendor data is fetched');
         this.setState({
-          isLoadingVendors: false
-        })
-        this.setState({
+          isLoadingVendors: false,
           vendorData: vendors
         })
-      }, 1000);
+      }, 500);
   }
 
   render() {
@@ -84,7 +82,7 @@ class Vendors extends React.Component {
           </tbody>
         </table>
         </div>
-        : <h3 className="loading">Loading...</h3>
+        : <Loader></Loader>
         }
       </>
     );

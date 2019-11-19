@@ -55,6 +55,8 @@ td {
 .mainbox {
   border: 1px solid #ccc;
   padding: 10px;
+  margin-left: 30px;;
+  box-shadow: 5px 10px 8px #4D7580;
 }
 .log {
   width:100%;
@@ -83,4 +85,16 @@ td {
   color: #4D7580;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.divLoader {
+  width: 100%;
+  margin: auto 45%;
+}
+.divLoader img {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  height: 35px;
 }

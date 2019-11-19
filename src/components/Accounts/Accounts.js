@@ -4,6 +4,7 @@ import copy from '../../copy';
 import { DATE_FORMAT } from '../../constants';
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
+import Loader from '../Loader/Loader';
 
 const propTypes = {
   copy: PropTypes.shape({}),
@@ -37,13 +38,12 @@ class Accounts extends Component {
         })
       })
       .catch(err => console.log(err));
-
-    this.setState({
-      isLoadingAccounts: false
-    })
-    this.setState({
-      accountData: accounts
-    })
+    setTimeout(() => {
+      this.setState({
+        isLoadingAccounts: false,
+        accountData: accounts
+      })
+    }, 500);
   }
 
   render() {
@@ -84,7 +84,7 @@ class Accounts extends Component {
           </tbody>
         </table>
         </div>
-        : <h3 className="loading">Loading...</h3>
+        : <Loader></Loader>
         }
       </>
     );

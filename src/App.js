@@ -10,6 +10,7 @@ import Vendors  from './components/Vendors/Vendors';
 import Accounts  from './components/Accounts/Accounts';
 import copy from './copy';
 import { API_URL } from './constants';
+import Loader from './components/Loader/Loader';
 
 class App extends Component {
 
@@ -62,7 +63,7 @@ class App extends Component {
                         {...props}
                         copy={copy}
                         {...this.state} />
-                      : <h3>Loading...</h3>
+                      : <Loader></Loader>
                       }
                         </>
                     )}
