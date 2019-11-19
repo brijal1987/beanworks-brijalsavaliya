@@ -5,6 +5,8 @@ import { DATE_FORMAT } from '../../constants';
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import Loader from '../Loader/Loader';
+import { CSVLink } from "react-csv";
+import { ButtonToolbar, Button } from "react-bootstrap";
 
 const propTypes = {
   copy: PropTypes.shape({}),
@@ -20,6 +22,7 @@ class Accounts extends Component {
 
   constructor(props) {
     super(props);
+    this.downloadAccounts = this.downloadAccounts.bind(this);
 
     this.state = {
       isLoadingAccounts: true,
@@ -46,13 +49,37 @@ class Accounts extends Component {
     }, 500);
   }
 
+  downloadAccounts(){
+    const { downloadFile } = this.props;
+    const { accountData } = this.state;
+
+    downloadFile(JSON.stringify(accountData), 'account-data.json');
+  }
+
   render() {
     const { accountData, isLoadingAccounts } = this.state;
+    console.log(accountData)
     return (
       <>
         {!isLoadingAccounts ?
         <div className="content">
           <h2>{copy.menu.accounts}</h2>
+          <ButtonToolbar>
+            <CSVLink 
+            filename={"accounts-data-file.csv"}
+            className="csv btn btn-primary"
+            data={accountData}>Download Accounts to CSV</CSVLink>
+            &nbsp;
+            <Button
+              onClick={this.downloadAccounts}
+              variant="info"
+            >
+              Download Json Data
+            </Button>
+
+          </ButtonToolbar>
+          <hr></hr>
+            
           <table className="table">
           <thead>
             <tr>

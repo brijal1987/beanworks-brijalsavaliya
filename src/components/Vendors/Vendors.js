@@ -5,6 +5,8 @@ import { DATE_FORMAT } from '../../constants';
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
 import Loader from '../Loader/Loader';
+import { CSVLink } from "react-csv";
+import { ButtonToolbar, Button } from "react-bootstrap";
 
 const propTypes = {
   copy: PropTypes.shape({}),
@@ -20,6 +22,8 @@ class Vendors extends React.Component {
 
   constructor(props) {
     super(props);
+    this.downloadVendors = this.downloadVendors.bind(this);
+
     this.state = {
       isLoadingVendors: true,
       vendorData: []
@@ -44,6 +48,14 @@ class Vendors extends React.Component {
       }, 500);
   }
 
+  downloadVendors(){
+    const { downloadFile } = this.props;
+    const { vendorData } = this.state;
+
+    downloadFile(JSON.stringify(vendorData), 'vendor-data.json');
+
+  }
+
   render() {
     const { vendorData, isLoadingVendors } = this.state;
     return (
@@ -51,6 +63,21 @@ class Vendors extends React.Component {
         {!isLoadingVendors ?
         <div className="content">
           <h2>{copy.menu.vendors}</h2>
+          <ButtonToolbar>
+            <CSVLink 
+            filename={"vendors-data-file.csv"}
+            className="csv btn btn-primary"
+            data={vendorData}>Download Vendors to CSV</CSVLink>
+            &nbsp;
+            <Button
+              onClick={this.downloadVendors}
+              variant="info"
+            >
+              Download Json Data
+            </Button>
+
+          </ButtonToolbar>
+          <hr></hr>
           <table className="table">
           <thead>
             <tr>

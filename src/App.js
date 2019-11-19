@@ -35,6 +35,15 @@ class App extends Component {
     if (response.status !== 200) throw Error(body.message);
     return body;
   }
+  downloadFile(dataString, filename) {
+    const link = document.createElement('a');
+    link.href = 'data:text/plain;charset=utf-8,' + dataString;
+    link.download = filename;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    link.parentElement.removeChild(link);
+  }
 
   render() {
 
@@ -84,6 +93,7 @@ class App extends Component {
                     render={props => (
                       <Vendors
                         callApi={this.callApi}
+                        downloadFile={this.downloadFile}
                         {...props}
                         copy={copy} />
                     )}
@@ -94,6 +104,7 @@ class App extends Component {
                     render={props => (
                       <Accounts
                         callApi={this.callApi}
+                        downloadFile={this.downloadFile}
                         {...props}
                         copy={copy} />
                     )}
