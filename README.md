@@ -77,3 +77,7 @@ In the project directory, you can run:
 ### Tests
 
 `npm run test`
+
+### Project Diagrams
+
+`diagrams/invoice_module_data_flow_diagram.png`
