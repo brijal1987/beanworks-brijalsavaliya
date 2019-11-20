@@ -10,6 +10,20 @@ Technologies used are:
 ### Database
 `MYSQL`
 
+## UserStories
+
+- As a user, I am able to sync data from erp on demand
+- As a user, I am able to see the data sets that are imported from my ERP to my database
+- As a user, I am able, sync log request, to get detailed sync process with timeline, so
+that I can confirm when my data exported from my erp to database
+- As a user, I am able to see Vendors from database, (importe from erp)
+- As a user, I am able to download Vendors
+- As a user, I am able to see Accounts from database, (importe from erp)
+- As a user, I am able to see Accounts
+
+## Architecture Diagram
+
+![Architecture](/diagrams/invoice_module_data_flow_diagram.png)
 
 ### Clone repo in your pc
 
@@ -78,7 +92,3 @@ In the project directory, you can run:
 ### Tests
 
 `npm run test`
-
-### Project Diagrams
-
-`diagrams/invoice_module_data_flow_diagram.png`
