@@ -87,14 +87,11 @@ In the project directory, you can run:
 `node start.js` 
 
 
-`Express GraphQL Server Now Running On http://localhost:4000/graphql`
-
-`Node Server Listening on port http://localhost:3000`
-
-
-## Client
+## Client, Open another console and run
 
 `npm start`
+
+`Open Browser and run http://localhost:3001/`
 
 ## Tests
 
