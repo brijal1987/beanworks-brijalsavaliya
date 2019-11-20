@@ -98,7 +98,21 @@ td {
   perspective: 1000px;
   height: 35px;
 }
-.csv { color: #fff !important;}
+.csv {
+  color: #fff !important;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  padding: 13px .75rem !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+  border-radius: .25rem !important;
+}
+.csv:hover {
+  color: #fff !important;
+  background-color: #138496 !important;
+  border-color: #117a8b !important;
+}
 .alert{
   font-size: 11px;
 }
