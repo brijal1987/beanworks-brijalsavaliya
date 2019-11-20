@@ -1,13 +1,13 @@
 Project is created for banworks
-Technologies used are:
+### Technologies used are:
 
-### Core Technology
+## Core Technology
 `ReactJs, NodeJS, Xero Account API`
 
-### Query Language
+## Query Language
 `GraphQL`
 
-### Database
+## Database
 `MYSQL`
 
 ## UserStories
@@ -25,18 +25,19 @@ that I can confirm when my data exported from my erp to database
 
 ![Architecture](/diagrams/invoice_module_data_flow_diagram.png)
 
-### Clone repo in your pc
+## Clone repo in your pc
 
 `git clone https://github.com/brijal1987/beanworks-brijalsavaliya.git`
 
+## Open Command Line / Terminal in your system and navigate to the directory with clonned repository.
 
 `cd beanworks-brijalsavaliya`
 
-### Setup Database
+## Setup Database
 
 `import /beanworks.sql into mysql and setup db settings`
 
-### Setup Configuration Files, Add new file in root `.env` and add below configurations
+## Setup Configuration Files, Add new file in root `.env` and add below configurations
 
 `DATABASE_NAME=beanworks`
 
@@ -73,7 +74,7 @@ Generate Public/Private key, Add Public key in `keys/` and Do Necessary changes 
 `}`
 
 
-### Install all dependencies
+## Install all dependencies
 
 `npm install`
 
@@ -81,14 +82,19 @@ Generate Public/Private key, Add Public key in `keys/` and Do Necessary changes 
 
 In the project directory, you can run:
 
-### Server/GraphQL Instance
+## Server/GraphQL Instance
 
-`node start.js`
+`node start.js` 
 
-### Client
+
+`Express GraphQL Server Now Running On http://localhost:4000/graphql
+Node Server Listening on port http://localhost:3000`
+
+
+## Client
 
 `npm start`
 
-### Tests
+## Tests
 
 `npm run test`
