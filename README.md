@@ -1,4 +1,6 @@
-Project is created for banworks
+Appication is created for beanworks
+
+
 ### Technologies used are:
 
 ## Core Technology
