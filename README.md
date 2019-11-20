@@ -18,9 +18,9 @@ Appication is created for beanworks
 - As a user, I am able to see the data sets that are imported from my ERP to my database
 - As a user, I am able, sync log request, to get detailed sync process with timeline, so
 that I can confirm when my data exported from my erp to database
-- As a user, I am able to see Vendors from database, (importe from erp)
+- As a user, I am able to see Vendors from database, (import from erp)
 - As a user, I am able to download Vendors
-- As a user, I am able to see Accounts from database, (importe from erp)
+- As a user, I am able to see Accounts from database, (import from erp)
 - As a user, I am able to see Accounts
 
 ## Architecture Diagram
