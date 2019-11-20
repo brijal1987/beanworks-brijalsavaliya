@@ -1,5 +1,5 @@
 export const API_URL = 'http://localhost:3000';
-export const DATE_FORMAT = 'YYYY/MM/DD hA';
+export const DATE_FORMAT = 'YYYY/MM/DD hh:mm A';
 export const SYNC_STARTED = "SYNC STARTED";
 export const SYNC_RECEIVED = "SYNC RECEIVED";
 export const SYNC_FINISHED = "SYNC FINISHED";
