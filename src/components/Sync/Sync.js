@@ -155,7 +155,6 @@ class Accounts extends Component {
       successMessage,
       isOpen
     } = this.state;
-    console.log(isOpen)
     return (
       <>
         {!isLoadingSyncData ? (
@@ -168,6 +167,7 @@ class Accounts extends Component {
                 disabled={isSyncProcessing}
                 onClick={this.syncData}
                 variant="info"
+                className="syncBtn"
               >
                 Sync
               </Button>
