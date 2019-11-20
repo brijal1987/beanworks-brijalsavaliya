@@ -84,10 +84,13 @@ Generate Public/Private key, Add Public key in `keys/` and Do Necessary changes 
 
 In the project directory, you can run:
 
+## Start Database Services
+
+Start Wamp/Mamp/Xammp
+
 ## Server/GraphQL Instance
 
-`node start.js` 
-
+`node start.js`
 
 ## Client, Open another console and run
 

@@ -33,7 +33,6 @@ class Vendors extends React.Component {
   componentDidMount() {
     const { callApi, copy } = this.props;
     let error = "";
-    console.log(copy)
     callApi("contacts")
       .then(function(data) {
         vendors = [];
