@@ -99,3 +99,7 @@ td {
   height: 35px;
 }
 .csv { color: #fff !important;}
+.alert{
+  font-size: 11px;
+}
+.toggle { float: right !important; margin-bottom: 10px; margin-right: 10px;}

@@ -32,7 +32,8 @@
     "xero-node": "^3.0.21"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "run": "node start.js && npm start",
+    "start": "PORT=3001 react-scripts start",
     "server": "node start.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

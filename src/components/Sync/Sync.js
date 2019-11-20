@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import copy from "../../copy";
 import { DATE_FORMAT } from "../../constants";
 import Moment from "react-moment";
 import { ButtonToolbar, Button } from "react-bootstrap";
@@ -28,7 +27,10 @@ class Accounts extends Component {
       isLoadingLogsData: true,
       isSyncProcessing: false,
       sData: [],
-      sLogsData: []
+      sLogsData: [],
+      successMessage: "",
+      errorMessage: "",
+      isOpen: true
     };
     this.selectTr = React.createRef();
   }
@@ -36,6 +38,13 @@ class Accounts extends Component {
   async componentDidMount() {
     this.getSyncData();
   }
+
+  toggle = () => {
+    const { isOpen } = this.state
+    this.setState({
+      isOpen: !isOpen
+    });
+  };
 
   async getSyncData(Parent = 0) {
     const { callApi } = this.props;
@@ -80,40 +89,79 @@ class Accounts extends Component {
   }
 
   async syncData() {
-    const { callApi } = this.props;
-
+    const { callApi, copy } = this.props;
+    let error, success = "";
     this.setState({
       isSyncProcessing: true,
       defaultloadLogs: false
     });
-    await callApi("syncData").catch(err => console.log(err));
+    await callApi("syncData")
+    .then(function(data) {
+      if(data.success && data.success===1){
+        success = copy.syncSuccessMessage
+      }else{
+        error = copy.syncErrorMessage.replace(":reason", data.sqlMessage);
+      }
+    })
+    .catch(err => console.log(err));
+
+    this.setState({
+      errorMessage: error,
+      successMessage: success
+    });
+    setTimeout(() => {
+      this.setState({
+        errorMessage:"",
+        successMessage:""
+      });
+    }, 2000 );
     this.getSyncData();
   }
 
   async deleteData() {
-    const { callApi } = this.props;
-
+    const { callApi, copy } = this.props;
+    let success= ""
     this.setState({
       isSyncProcessing: true,
       defaultloadLogs: false
     });
-    await callApi("deleteData").catch(err => console.log(err));
+    await callApi("deleteData")
+    .then(function() {
+      success = copy.deleteSuccessMessage
+    })
+    .catch(err => console.log(err));
     this.getSyncData();
+
+    this.setState({
+      successMessage: success
+    });
+    setTimeout(() => {
+      this.setState({
+        successMessage:""
+      });
+    }, 2000 );
   }
 
   render() {
+    const { copy } = this.props;
     const {
       sData,
       sLogsData,
       isLoadingSyncData,
       isLoadingLogsData,
       isSyncProcessing,
-      defaultloadLogs
+      defaultloadLogs,
+      errorMessage,
+      successMessage,
+      isOpen
     } = this.state;
+    console.log(isOpen)
     return (
       <>
         {!isLoadingSyncData ? (
           <div className="content">
+            {successMessage &&   <div class="alert alert-success" role="alert">{successMessage}</div>}
+            {errorMessage &&   <div class="alert alert-danger" role="alert">{errorMessage}</div>}
             <h2>{copy.menu.data_management}</h2>
             <ButtonToolbar>
               <Button
@@ -206,23 +254,28 @@ class Accounts extends Component {
                     </h6>
                     <h5>SYNCTOOL LOGS</h5>
                     <div className="log">
-                      <table border="1" className="table">
-                        <tbody>
-                          {sLogsData && sLogsData.length > 0 ? (
-                            sLogsData.map(syncLog => {
-                              return (
-                                <tr key={syncLog.id}>
-                                  <td>{syncLog.Message}</td>
+                      <Button className="toggle" color="primary" onClick={this.toggle} >
+                        {!isOpen ? "Show More": "Show Less"}
+                        </Button>
+                      {isOpen && <div className="toggleDiv">
+                          <table border="1" className="table" id="demo" >
+                            <tbody>
+                              {sLogsData && sLogsData.length > 0 ? (
+                                sLogsData.map(syncLog => {
+                                  return (
+                                    <tr key={syncLog.id}>
+                                      <td>{syncLog.Message}</td>
+                                    </tr>
+                                  );
+                                })
+                              ) : (
+                                <tr>
+                                  <td colSpan="4">No Sync Log Yet</td>
                                 </tr>
-                              );
-                            })
-                          ) : (
-                            <tr>
-                              <td colSpan="4">No Sync Log Yet</td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
+                              )}
+                            </tbody>
+                          </table>
+                      </div>}
                     </div>
                   </div>
                 ) : (

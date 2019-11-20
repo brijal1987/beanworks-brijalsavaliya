@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import copy from '../../copy';
 import { DATE_FORMAT } from '../../constants';
 import Moment from 'react-moment';
 import { Link } from "react-router-dom";
@@ -26,21 +25,33 @@ class Vendors extends React.Component {
 
     this.state = {
       isLoadingVendors: true,
-      vendorData: []
+      vendorData: [],
+      errorMessage: "",
     };
   }
 
   componentDidMount() {
-    const { callApi } = this.props;
+    const { callApi, copy } = this.props;
+    let error = "";
+    console.log(copy)
     callApi("contacts")
       .then(function(data) {
         vendors = [];
-        data.forEach(vendor => {
-          vendors.push(vendor);
-        })
+        if(data.code==="ER_BAD_FIELD_ERROR"){
+          error = copy.errorMessage;
+        }else{
+          data.forEach(vendor => {
+            vendors.push(vendor);
+          })
+        }
       })
       .catch(err => console.log(err));
       setTimeout(() => {
+        if(error){
+          this.setState({
+            errorMessage: copy.errorMessage
+          })
+        }
         this.setState({
           isLoadingVendors: false,
           vendorData: vendors
@@ -57,7 +68,16 @@ class Vendors extends React.Component {
   }
 
   render() {
-    const { vendorData, isLoadingVendors } = this.state;
+    const { copy } = this.props;
+
+    const { vendorData, isLoadingVendors, errorMessage } = this.state;
+    if(errorMessage) {
+      return (
+        <div className="content">
+          <div className="warning">{errorMessage}</div>
+        </div>
+      );
+    }
     return (
       <>
         {!isLoadingVendors ?

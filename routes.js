@@ -121,7 +121,7 @@ router.get("/deleteData", async (req, res) => {
   truncateAccount();
   truncateVendors();
   truncateSyncData();
-  res.json("Routes");
+  res.json({ success:1 });
 });
 
 router.get("/syncData", async (req, res) => {
@@ -155,8 +155,8 @@ router.get("/syncData", async (req, res) => {
   }
   database.beginTransaction(function(err) {
     truncateAccount();
-    if (err) {
-      throw err;
+    if (err){
+      res.json(err);
     }
     var sql =
       "INSERT INTO Accounts (id, AccountID, Name, Code, Status, UpdatedDateUTC ) VALUES ?";
@@ -164,7 +164,7 @@ router.get("/syncData", async (req, res) => {
       if (err) {
         database.rollback(function() {
           insertSyncLogs(SYNC_FAILED, 0, parentID);
-          throw err;
+          res.json(err);
         });
       }
       insertSyncLogs(SYNC_RECEIVED, accountData.length, parentID);
@@ -204,7 +204,7 @@ router.get("/syncData", async (req, res) => {
   database.beginTransaction(function(err) {
     truncateVendors();
     if (err) {
-      throw err;
+      res.json(err);
     }
     var vendorSql =
       "INSERT INTO Vendors (id, ContactID, Name, AccountNumber, ContactStatus, UpdatedDateUTC ) VALUES ?";
@@ -212,7 +212,7 @@ router.get("/syncData", async (req, res) => {
       if (err) {
         database.rollback(function() {
           insertSyncLogs(SYNC_FAILED, 0, vendorParentID, "Vendor");
-          throw err;
+          res.json(err);
         });
       }
       insertSyncLogs(
@@ -225,14 +225,16 @@ router.get("/syncData", async (req, res) => {
   });
   insertSyncLogs(SYNC_FINISHED, vendorData.length, vendorParentID, "Vendor");
 
-  res.json({ vendor: vendorData.length, account: accountData.length });
+  res.json({ success:1, vendor: vendorData.length, account: accountData.length });
 });
 
 router.get("/accounts", async (req, res) => {
   database.query(
     "SELECT id, AccountID, Name, Code, Status, UpdatedDateUTC FROM Accounts",
     (err, rows) => {
-      if (err) throw err;
+      if (err){
+        res.json(err);
+      }
       res.json(rows);
     }
   );
@@ -243,7 +245,9 @@ router.get("/getSyncData/:id", async (req, res) => {
   database.query(
     `SELECT id, Parent, SyncDataType, SyncType, SyncBy, SyncOn, Status, Message FROM SyncLogs WHERE Parent = ${parentID} ORDER BY id DESC`,
     (err, rows) => {
-      if (err) throw err;
+      if (err){
+        res.json(err);
+      }
       res.json(rows);
     }
   );
@@ -253,7 +257,9 @@ router.get("/contacts", async (req, res) => {
   database.query(
     "SELECT id, ContactID, Name, AccountNumber, ContactStatus, UpdatedDateUTC FROM Vendors",
     (err, rows) => {
-      if (err) throw err;
+      if (err){
+        res.json(err);
+      }
       res.json(rows);
     }
   );

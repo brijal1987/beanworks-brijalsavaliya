@@ -27,21 +27,33 @@ class Accounts extends Component {
     this.state = {
       isLoadingAccounts: true,
       isDownloadProcessing:false,
-      accountData: []
+      accountData: [],
+      errorMessage: "",
     };
   }
 
   async componentDidMount() {
     const { callApi } = this.props;
+    let error = "";
     await callApi("accounts")
       .then(function(data) {
         accounts = [];
-        data.forEach(account => {
-          accounts.push(account);
-        })
+
+        if(data.code==="ER_BAD_FIELD_ERROR"){
+          error = copy.errorMessage;
+        }else{
+          data.forEach(account => {
+            accounts.push(account);
+          })
+        }
       })
       .catch(err => console.log(err));
     setTimeout(() => {
+      if(error){
+        this.setState({
+          errorMessage: copy.errorMessage
+        })
+      }
       this.setState({
         isLoadingAccounts: false,
         accountData: accounts
@@ -57,8 +69,14 @@ class Accounts extends Component {
   }
 
   render() {
-    const { accountData, isLoadingAccounts } = this.state;
-    console.log(accountData)
+    const { accountData, isLoadingAccounts, errorMessage } = this.state;
+    if(errorMessage) {
+      return (
+        <div className="content">
+          <div className="warning">{errorMessage}</div>
+        </div>
+      );
+    }
     return (
       <>
         {!isLoadingAccounts ?
