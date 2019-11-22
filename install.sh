@@ -1,4 +1,5 @@
 #!/bin/sh
-apt-get update  # To get the latest package lists
-apt-get install <package name> -y
-#etc.
+LIST_OF_APPS="nodejs mysql-server"
+
+sudo apt-get update  # To get the latest package lists
+sudo apt-get install -y $LIST_OF_APPS
